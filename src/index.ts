@@ -91,9 +91,14 @@ app.use(
   }
 );
 
-// 启动服务器
-app.listen(port, () => {
-  logger.info(`豆瓣电影MCP服务已启动: http://localhost:${port}`);
-  logger.info(`API文档: http://localhost:${port}/docs`);
-  logger.info(`客户端示例: http://localhost:${port}/demo`);
-});
+// 启动服务器（仅在本地开发时）
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    logger.info(`豆瓣电影MCP服务已启动: http://localhost:${port}`);
+    logger.info(`API文档: http://localhost:${port}/docs`);
+    logger.info(`客户端示例: http://localhost:${port}/demo`);
+  });
+}
+
+// 导出 app 供 Vercel 使用
+export default app;
